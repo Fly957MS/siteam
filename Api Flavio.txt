@@ -1,0 +1,140 @@
+[POST]
+Restituisce token
+API: /api/login
+ESEMPIO: http://192.168.1.239:6100/api/login
+
+
+
+[GET]
+Elenco statistiche di un anno [Richiede token come parametro]
+Api: /api/statistiche/($azienda)/($anno)?token=il_mio_token
+ESEMPIO: http://192.168.1.239:6100/api/statistiche/planet/2020?token=ISY
+*Restituisce codice 400 anche se funzionante*
+
+
+
+[GET]
+Restituisce le offerte di un prodotto [Richiede token come parametro]
+API: api/ricercaprodotti/$minsan/offertegrossisti
+ESEMPIO: http://192.168.1.239:6100/api/ricercaprodotti/045489022/offertegrossisti?token=ISY
+*Non funziona da postman*
+
+
+
+[GET]
+Elenco statistiche di un mese di un anno [Richiede token come parametro]
+API: /api/statistiche/($azienda)/($anno)/($mese)?token=il_mio_token
+ESEMPIO: http://192.168.1.239:6100/api/statistiche/planet/2020/05?token=ISY
+*Restituisce codice 400 anche se funzionante*
+
+
+
+[GET]
+elenco dei Grossisti presenti nella X_Ord_PRovv [Richiede token ed azienda come parametri]
+API: /api/ordine/grossisti
+ESEMPIO: http://192.168.1.239:6100/api/ordine/grossisti?token=ISY&&azienda=PLANET
+*Restituisce codice 400 anche se funzionante*
+
+
+
+[GET]
+prodotti dell’ordine relative al grossista [Richiede token ed azienda come parametri]
+API: /api/ordine/prodotti/($codice_grossista)
+ESEMPIO: http://192.168.1.239:6100/api/ordine/prodotti/G141?token=isy&azienda=PLANET
+
+
+
+[GET]
+Restituisce i PostIt, i generici e l'url dell'immagine del prodotto [Richiede token come parametro]
+API: /api/ricercaprodotti/$minsan/info?
+ESEMPIO: http://192.168.1.239:6100/api/ricercaprodotti/028245090/info?token=ISY
+*Non funziona da postman*
+
+
+
+[GET]
+Restituisce i totali delle statistiche di un prodotto di un periodo [Parametri: azienda, token, anno, meseDa, meseAl]
+API: /api/statistiche/prodotto/($minsan)
+ESEMPIO: http://192.168.1.239:6100/api/statistiche/prodotto/930204843?azienda=PLANET&anno=2017&mesedal=1&meseal=9&token=ISY
+
+
+
+[POST]
+Permette di eseguire qualsiasi query
+API: http://192.168.1.239:6100/api/sqlfunctions/execquery
+
+Body della richiesta:
+{
+  "command":{
+            	"token" : "ISY",
+	            "sqlcommand" : "select * from X_Aziende where Azienda = :Azi and mese_export = :mese",
+	            "parameters" : [{"param_name":"Azi", "value":"PLANET", "typo":"ptString"}, {"param_name":"mese", "value":3, "typo":"ptInteger"}]
+            }
+}
+
+Typo rappresenta il tipo di dato del parametro e può assumere i seguenti valori: ('ptInteger', 'ptDouble', 'ptFloat', 'ptDate', 'ptDateTime', 'ptString’);
+"parameters" è un array, rimane un array anche se si ha solo un parametro
+
+
+
+[POST]
+Crea o elimina una riga dalla x_ordini_prov
+API: /api/ordine/provvisorio/addriga
+
+Body della richiesta:
+{
+    "codicefornitore" : "$grossista",
+    "minsan" : "$minsan",
+    "quantita" : 1,
+    "token" : "ISY",
+}
+
+*se la quantità nel body è 0, la riga viene eliminata, altrimenti viene sommata la quantità nel body con quella nella x_ordini_prov
+
+
+
+RESTITUISCE MENU UTENTE
+http://93.148.253.158:6100/api/menuapp
+
+
+STATISTICHE DI CASSA
+http://93.148.253.158:6100/api/statistichedicassa
+
+
+http://93.148.253.158:6100/api/totalicassalibera
+http://93.148.253.158:6100/api/totalicassamutualistica
+http://93.148.253.158:6100/api/totali (cassa medie)
+
+
+STATISTICHE PRODOTTI
+Prevede come parametri {azienda, anno, mesedal, meseal}
+http://93.148.253.158:6100/api/statistiche/prodotto
+http://93.148.253.158:6100/api/statistiche/ubicazione
+http://93.148.253.158:6100/api/statistiche/category
+http://93.148.253.158:6100/api/statistiche/brand
+http://93.148.253.158:6100/api/statistiche/atcgmp
+http://93.148.253.158:6100/api/statistiche/degrasi
+http://93.148.253.158:6100/api/statistiche/classe
+http://93.148.253.158:6100/api/statistiche/raggruppamento
+http://93.148.253.158:6100/api/statistiche/princattivo
+http://93.148.253.158:6100/api/statistiche/codsettore
+http://93.148.253.158:6100/api/statistiche/giacenzerettificate        
+http://93.148.253.158:6100/api/statistiche/prenotazioniaperte
+http://93.148.253.158:6100/api/statistiche/sospesiaperti
+
+CREAZIONE POSTIT
+http://93.148.253.158:6100/api/ricercaprodotti/postit?token=UNTOKEN
+
+restituisce l’informazioni sull’esistenza o meno di ricette dem in scadenza
+http://93.148.253.158:6100/api/deminscadenza
+
+http://93.148.253.158:6100/api/ricercaprodotti/{minsan}/info
+http://93.148.253.158:6100/api/invendibil
+http://93.148.253.158:6100/api/scadcontabili
+http://93.148.253.158:6100/api/scadprodotti
+
+http://93.148.253.158:6100/api/statistiche/giacenzerettificate
+http://93.148.253.158:6100/api/statistiche/prenotazioniaperte
+http://93.148.253.158:6100/api/statistiche/sospesiaperti
+
+
